@@ -1,3 +1,4 @@
+import os
 import yfinance as yf
 import pandas as pd
 
@@ -6,8 +7,11 @@ def download_stock_data(stock_symbol, interval):
         # Download stock data
         stock_data = yf.download(stock_symbol, interval=interval)
 
-        # Save data to CSV
-        file_name = f"{stock_symbol}_{interval}.csv"
+        # Get the directory of the script
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+
+        # Save data to CSV in the same directory as the script
+        file_name = os.path.join(script_dir, f"{stock_symbol}_{interval}.csv")
         stock_data.to_csv(file_name)
         print(f"Stock data saved to {file_name}")
     except Exception as e:
