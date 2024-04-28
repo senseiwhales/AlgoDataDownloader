@@ -34,10 +34,14 @@ def download_stock_data(stock_symbol, start_date, end_date, multiplier, timespan
             df = pd.DataFrame(data['results'])
             
             # Get the directory of the script
-            script_dir = os.path.dirname(os.path.realpath(__file__))
-            
-            # Save data to CSV in the same directory as the script
-            file_name = os.path.join(script_dir, f"{stock_symbol}_{multiplier}_{timespan}_{start_date}_{end_date}.csv")
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+
+            # Create the directory if it doesn't exist
+            if not os.path.exists(script_dir):
+                os.makedirs(script_dir)
+
+            # Save data to CSV with the name 'tester.csv' in the same directory as the script
+            file_name = os.path.join(script_dir, 'tester.csv')
             df.to_csv(file_name, index=False)
             print(f"Stock data saved to {file_name}")
         else:
